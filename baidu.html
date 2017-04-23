@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body{
+            background: #6fa965;
+        }
+        #q{
+            width: 300px;
+            height: 30px;
+            padding: 5px;
+            border:2px solid #ff4230;
+            font-size: 16px;
+            outline-style: none;
+        }
+        #ul1{
+            border:2px solid #ff2a29;
+            width: 310px;
+            margin: 0;
+            padding: 0;
+            display: none;
+            list-style: none;
+        }
+        #container{
+            width: 310px;
+            margin: 20px auto;
+        }
+        li a{
+            line-height: 30px;
+            padding: 10px;
+            text-decoration: none;
+            color:black;
+            display: block;
+        }
+        li a:hover{
+            background: #ff8e8f;
+            color:white;
+        }
+    </style>
+    <script>
+        function jquery(data){
+            var oUl=document.getElementById('ul1');
+            var html='';
+            if(data.s.length){
+                oUl.style.display='block';
+                for(var i=0;i<data.s.length;i++){
+                    html+= '<li><a target="_blank" href="http://www.baidu.com/s?wd='+data.s[i]+'">'+ data.s[i] +'</a></li>';
+                }
+                oUl.innerHTML=html;
+            }else{
+                oUl.style.display='none';
+            }
+        }
+        window.onload= function () {
+            var oQ=document.getElementById('q');
+            var oUl=document.getElementById('ul1');
+            oQ.onkeyup= function () {
+                if(this.value!=''){
+                    var oScript=document.createElement('script');
+                    oScript.src='https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?wd='+this.value+'&cb=jquery';
+                    document.body.appendChild(oScript);
+                }else{
+                    oUl.style.display='none';
+                }
+            }
+//            事件委托处理鼠标离开后UL消失
+            document.onclick= function (event) {
+                event=event||window.event;
+                var et=event.target?event.target:event.srcElement;
+//                alert(aaa.tagName);
+                if(et.tagName==='LI'){
+                    oUl.style.display='block';
+                }
+                oUl.style.display='none';
+            }
+        }
+    </script>
+</head>
+<body>
+    <div id="container">
+        <input type="text" id="q"/>
+        <ul id="ul1"></ul>
+    </div>
+</body>
+</html>
